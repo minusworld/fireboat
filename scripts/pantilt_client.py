@@ -10,7 +10,7 @@ VIRT_PIN=1
 def pan_tilt_control_client(degree, direct):
     rospy.wait_for_service("pan_tilt_control")
     try:
-        sp_pan_tilt_control = rospy.ServiceProxy("pan_titlt_control", PumpControl)
+        sp_pan_tilt_control = rospy.ServiceProxy("pan_tilt_control", PumpControl)
         success = sp_pan_tilt_control(degree, direct)
         return success
     except rospy.ServiceException, e:
@@ -37,7 +37,7 @@ if __name__=='__main__':
                 degree = -degree
             }
             if((direct == VIRT_PIN or direct ==HORZ_PIN) and typeof(degree) == int){
-                print pump_control_client(degree, direct)
+                print pan_tilt_control_client(degree, direct)
             }
         }
         else{
