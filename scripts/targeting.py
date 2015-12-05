@@ -75,9 +75,8 @@ def gridify(img, s=3):
             h = 0
     return grids
 
-if __name__ == '__main__':
-    img = Image("Test2.png")
+# returns a tuple with the grid index and
+# the grid's score:  (index, score)
+def target(img):
     grids = gridify(img)
-    res = score_grids(img)
-    print res
-    show_image(grids[res[0]])
+    return score_grids(img)
