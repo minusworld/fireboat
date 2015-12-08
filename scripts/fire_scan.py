@@ -49,7 +49,7 @@ def main():
 
 		time.sleep(1)
 
-        score = (-1, -1)
+        score = (-1, -1)    # needed for scoping
         try:
             score = targeting.target_from_file("test0.png")
         except FileNotFoundError as e:

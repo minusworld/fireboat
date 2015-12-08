@@ -82,6 +82,12 @@ def target(img):
     grids = gridify(img)
     return score_grids(img)
 
+def fire_in_view(score):
+    if score[0] == 5:
+        return True
+    else:
+        return False
+
 def target_from_file(filename):
     if os.path.isfile(filename):
         img = Image(filename)
