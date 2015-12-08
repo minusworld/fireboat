@@ -1,4 +1,5 @@
 from SimpleCV import *
+import os
 
 # width and height of images from FLIR
 global_w = 80
@@ -80,3 +81,12 @@ def gridify(img, s=3):
 def target(img):
     grids = gridify(img)
     return score_grids(img)
+
+def target_from_file(filename):
+    if os.path.isfile(filename):
+        img = Image(filename)
+        score = target(img)
+        os.remove(filename)
+        return score
+    else:
+        raise FileNotFoundError

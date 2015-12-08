@@ -1,5 +1,6 @@
 import time
-
+import targeting
+import os
 
 def servo_out(servoNum, servoValue):
 	with open('/dev/servoblaster', 'a') as f:
@@ -48,6 +49,12 @@ def main():
 
 		time.sleep(1)
 
+        score = (-1, -1)
+        try:
+            score = targeting.target_from_file("test0.png")
+        except FileNotFoundError as e:
+            continue
+            
 		if servo0_position > servo0_max:
 			servo0_direction = 'down'
 			servo0_position -= 10
