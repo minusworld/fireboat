@@ -1,5 +1,6 @@
 from SimpleCV import *
 import os
+import datetime
 
 # width and height of images from FLIR
 global_w = 80
@@ -33,10 +34,15 @@ def show_image(img):
 # most yellow.
 def yellow_score(img):
     yellow_distance = img.colorDistance(Color.YELLOW)
-    return yellow_distance.getNumpy().flatten().mean()
+    return sum(yellow_distance.getNumpy().flatten())
 
 def score(img):
     return yellow_score(img)  # just does yellow_score for now, may change
+
+def score_alt(img):
+    score = sum(img.getNumpy().flatten())
+    print img.getNumpy()
+    return score
 
 # scores each grid
 # returns the grid index of the winning grid
@@ -51,7 +57,18 @@ def score_grids(img):
             min_score = this_score
             grid_index = i
     return (grid_index, min_score)
-   
+
+def score_grids_max(img):
+    grids = gridify(img)
+    max_score = 0
+    grid_index = -1
+    for i, grid in enumerate(grids):
+        this_score = score_alt(grid)
+        if this_score > max_score:
+            max_score = this_score
+            grid_index = i
+    return (grid_index, max_score)
+
 # divides an image into equally-sized regions 
 # grids returned like so, for s=3:
 # [ [0] [1] [2]
@@ -78,9 +95,13 @@ def gridify(img, s=3):
 
 # returns a tuple with the grid index and
 # the grid's score:  (index, score)
-def target(img):
+def target(img, show=False):
     grids = gridify(img)
-    return score_grids(img)
+    #score = score_grids(img)
+    score = score_grids_max(img)
+    if show:
+        win = grids[score[0]].show()
+    return score
 
 def fire_in_view(score):
     if score[0] == 5:
@@ -91,8 +112,9 @@ def fire_in_view(score):
 def target_from_file(filename):
     if os.path.isfile(filename):
         img = Image(filename)
-        score = target(img)
-        os.remove(filename)
+        score = target(img, True)
+        #os.remove(filename)
+	os.rename(filename, filename + str(datetime.datetime.now()) + ".png")
         return score
     else:
         raise FileNotFoundError

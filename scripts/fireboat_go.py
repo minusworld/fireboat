@@ -10,6 +10,8 @@ def pump_off():
 def go():
     servo_control = ServoControl()
     while 1:
-        os.sytstem("../bin/raspberrypi_video")
+        os.system("../bin/raspberrypi_video")
         servo_control.step()
-    
+
+if __name__ == "__main__":
+    go()    
