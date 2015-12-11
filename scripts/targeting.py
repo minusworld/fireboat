@@ -19,7 +19,7 @@ global_h = 60
 # ---------
 segments = 3
 
-FILTER_THRESHOLD = sum( (Image((global_w, global_h).invert()) / 13).getNumpy().flatten() )
+FILTER_THRESHOLD = sum( (Image((global_w/segments, global_h/segments).invert()) / 13).getNumpy().flatten() )
 
 # helper method for showing an image.
 def show_image(img):
