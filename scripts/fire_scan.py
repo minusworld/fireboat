@@ -19,8 +19,8 @@ class ServoControl:
         self.servo0_direction = 'up' # values of up or down
         self.servo1_direction = 'up' # values of up or down
 
-	self.fire_inView = False
-	self.fire_targeted  = False
+	    self.fire_inView = False
+	    self.fire_targeted  = False
 
         self.servo_out(0, self.servo0_position)
         time.sleep(1)
@@ -52,7 +52,7 @@ class ServoControl:
             score = (-1, -1)    # needed for scoping. score format: (grid_index, grid_score)
             try:
                 score = targeting.target_from_file("test0.png")
-		print(score)
+		        print(score)
             except FileNotFoundError as e:
                 return  
                 
