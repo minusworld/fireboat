@@ -19,6 +19,8 @@ global_h = 60
 # ---------
 segments = 3
 
+FILTER_THRESHOLD = sum( (Image((global_w, global_h).invert()) / 13).getNumpy().flatten() )
+
 # helper method for showing an image.
 def show_image(img):
     win=img.show()
@@ -64,10 +66,16 @@ def score_grids_max(img):
     grid_index = -1
     for i, grid in enumerate(grids):
         this_score = score_alt(grid)
-        if this_score > max_score:
+        if this_score > max_score and filter_img(grid, this_score, FILTER_THRESHOLD):
             max_score = this_score
             grid_index = i
     return (grid_index, max_score)
+
+def filter_img(img, score, score_threshold):
+    if score(img) < score_threshold:
+        return False
+    else:
+        return True
 
 # divides an image into equally-sized regions 
 # grids returned like so, for s=3:
